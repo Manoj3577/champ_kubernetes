@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: champ-web-deploy
+  name: champ-web
   namespace: champ-mini-project
 spec:
   replicas: 2
