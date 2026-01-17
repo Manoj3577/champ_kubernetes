@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: champ-web-deploy
+  namespace: champ-mini-project
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: champ-web
+  template:
+    metadata:
+      labels:
+        app: champ-web
+    spec:
+      containers:
+      - name: champ-web
+        image: manoj9923/my-champ-web:v1
+        ports:
+        - containerPort: 80
+
