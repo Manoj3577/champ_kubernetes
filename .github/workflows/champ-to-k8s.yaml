@@ -1,8 +1,8 @@
 name: Deploy to Kubernetes
 
 on:
-  #push:
-  workflow_dispatch: 
+  #push
+  workflow_dispatch:
     branches:
       - main
 
@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up kubectl
-      uses: azure/setup-kubectl@v4
+      uses: azure/setup-kubectl@v4       #using azure to run kubctl cmd:wq!continue-on-error: 
       with:
         version: v1.29.0
 
@@ -24,13 +24,14 @@ jobs:
         mkdir -p $HOME/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
 
-    - name: Deploy to Kubernetes
+    - name: Deploy Namespace
       run: |
-        - name: Deploy Namespace
-          run: kubectl apply -f champ-devops-mini-project/k8s-namespace.yaml
-        - name: Deploy App
-          run: kubectl apply -f champ-devops-mini-project/
-        - name: Verify Rollout
-          run: kubectl rollout status deployment/champ-web -n champ-mini-project
+        kubectl apply -f champ-devops-mini-project/k8s-namespace.yaml
 
+    - name: Deploy Application
+      run: |
+        kubectl apply -f champ-devops-mini-project/
 
+    - name: Verify Rollout
+      run: |
+        kubectl rollout status deployment/champ-web -n champ-mini-project
