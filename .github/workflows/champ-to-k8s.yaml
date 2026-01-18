@@ -26,6 +26,11 @@ jobs:
 
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f champ-devops-mini-project/
-        kubectl rollout status deployment/champ-web -n champ-mini-project
+        - name: Deploy Namespace
+          run: kubectl apply -f champ-devops-mini-project/k8s-namespace.yaml
+        - name: Deploy App
+          run: kubectl apply -f champ-devops-mini-project/
+        - name: Verify Rollout
+          run: kubectl rollout status deployment/champ-web -n champ-mini-project
+
 
